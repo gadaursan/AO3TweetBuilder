@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Tweet Builder</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/tweetbuilder.css">
+    <link rel="stylesheet" href="css/Twitter2020.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Manifest silliness -->
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="AO3 Tweet Builder">
+    <meta name="apple-mobile-web-app-title" content="AO3 Tweet Builder">
+    <meta name="theme-color" content="#990000">
+    <meta name="msapplication-navbutton-color" content="#990000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body class="siteNM">
+
+    <!--- Side navigation Form --->
+    <div id="mySidenav" class="sidenav">
+      <button class="closebtn settingsbtn" onclick="closeNav()"><i class="material-icons md-48 md-light">close</i></button>
+
+      <div class="accordion" id="settingAccordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                General
+              </button>
+            </h2>
+          </div>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#settingAccordion">
+            <div class="card-body">
+              <!--- Day/Night/Simple Mode --->
+              <form>
+                <!--- Enable/Disable Dummy Text --->
+                <div class="form-group">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="hideDummyText" onclick="hideDummy()">
+                    <label class="form-check-label" for="hideDummyText">Hide dummy text</label>
+                  </div>
+                </div>
+                <!--- Tweet Apperance --->
+                <fieldset>
+                  <p class="mb-0">Tweet Appearance</p>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="twMode" id="twMode1" value="day" checked onclick="editMode()">
+                    <label class="form-check-label" for="twMode1">
+                      Day Mode
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="twMode" id="twMode2" value="night" onclick="editMode()">
+                    <label class="form-check-label" for="twMode2">
+                      Night Mode
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="twMode" id="twMode3" value="simple" onclick="editMode()">
+                    <label class="form-check-label" for="twMode3">
+                      Simple Mode
+                    </label>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Header
+              </button>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#settingAccordion">
+            <div class="card-body">
+            <form>
+              <!--- Hide Element --->
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="hideHeader" onclick="hideUser()">
+                  <label class="form-check-label" for="hideHeader">Hide header</label>
+                </div>
+              </div>
+              <!--- Avatar --->
+              <div class="form-group">
+                <label for="inputAvatar">Avatar URL</label>
+                <input class="form-control" type="url" id="inputAvatar" placeholder="Paste URL here" oninput="buildAvatar()">
+              </div>
+              <!--- Avatar Alt Text --->
+              <div class="form-group">
+                <label for="inputAltAvatar">Avatar Alt Text</label>
+                <input class="form-control" type="url" id="inputAltAvatar" placeholder="Text if the image doesn't show" oninput="buildAvatar()">
+              </div>
+              <!--- Username and Handle--->
+              <div class="form-group">
+                <label for="inputName">Twitter Name</label>
+                <input class="form-control" type="text" id="inputName" maxlength="35" placeholder="twitter name" oninput="buildName()">
+              </div>
+              <div class="form-group">
+                <label for="inputHandle">Twitter Handle</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                  </div>
+                  <input type="text" class="form-control" id="inputHandle" maxlength="15" placeholder="twitterhandle" oninput="buildHandle()">
+                </div>
+              </div>
+              <!--- Verified Icon --->
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="inputVerified" onclick="addVerified()" checked>
+                  <label class="form-check-label" for="inputVerified">Verified Account</label>
+                </div>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Content
+              </button>
+            </h2>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#settingAccordion">
+            <div class="card-body">
+              <!--- Show Replying Tag --->
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="showReplying" onclick="addReply()">
+                  <label class="form-check-label" for="showReplying">Show replying tag</label>
+                </div>
+              </div>
+              <!--- Replying Tag --->
+              <div class="form-group collapse" aria-expanded="false" role="form" id="addReply">
+                <label for="inputReplyHandle">Handle being replied to</label>
+                <input class="form-control" type="text" id="inputReplyHandle" placeholder="replyhandle" maxlength="15" oninput="buildReply()">
+              </div>
+              <!--- Text --->
+              <div class="form-group">
+                <label for="inputText">Text</label>
+                <textarea class="form-control" id="inputText" maxlength="280" placeholder="Text here..."></textarea>
+                <div id="charCount">
+                  <span id="current">0</span>
+                  <span id="maximum">/ 280</span>
+                </div>
+              </div>
+              <!--- Icon tray to add picture/poll/quote retweet --->
+              <div class="form-group">
+                <p class="mb-0">Add Media (Choose One)</p>
+                <div class="form-inline" id="chooseMedia">
+                  <span class="checkbox">
+                    <input class="checkbox-element" name="addMedia" value="addPhoto" type="checkbox" onclick="addMedia()"/>
+                    <i class="material-icons">insert_photo</i>
+                  </span>
+                    <span class="checkbox">
+                      <input class="checkbox-element" name="addMedia" value="addQuote" type="checkbox" onclick="addMedia()"/>
+                      <i class="material-icons">sms</i>
+                    </span>
+                  <span class="checkbox">
+                    <input class="checkbox-element" name="addMedia" value="addPoll" type="checkbox" onclick="addMedia()"/>
+                    <i class="material-icons">poll</i>
+                  </span>
+                </div>
+              </div>
+
+              <!--- Add Picture URL --->
+              <div class="collapse mediaBox" role="form" aria-expanded="false" id="addPhoto">
+                <div class="form-group">
+                  <label for="inputImage">Image URL</label>
+                  <input class="form-control" type="text" id="inputImage" oninput="buildPhoto()">
+                </div>
+                <div class="form-group">
+                  <label for="inputAltImage">Image Alt Text</label>
+                  <input class="form-control" type="text" id="inputAltImage" oninput="buildPhoto()" placeholder="Text if the image doesn't show">
+                </div>
+              </div>
+
+              <!--- Add Quote Retweet --->
+              <div class="collapse mediaBox" role="form" aria-expanded="false" id="addQuote">
+                <!--- Embedded Avatar --->
+                <div class="form-group">
+                  <label for="inputAvatarEmbed">Quoted Avatar URL</label>
+                  <input class="form-control" type="text" id="inputAvatarEmbed" oninput="buildAvatarEmbed()">
+                </div>
+                <!--- Embedded Avatar Alt Text--->
+                <div class="form-group">
+                  <label for="inputAltAvatarEmbed">Quoted Avatar Alt Text</label>
+                  <input class="form-control" type="text" id="inputAltAvatarEmbed" oninput="buildAvatarEmbed()" placeholder="Text if the image doesn't show">
+                </div>
+                <!--- Umbedded Username and Handle--->
+                <div class="form-group">
+                  <label for="inputNameEmbed">Quoted Twitter Name</label>
+                  <input class="form-control" type="text" id="inputNameEmbed" maxlength="35" placeholder="embedded twitter name" oninput="buildNameEmbed()">
+                </div>
+                <div class="form-group">
+                  <label for="inputHandleEmbed">Quoted Twitter Handle</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="inputHandleEmbed" maxlength="15" placeholder="embedhandle" oninput="buildHandleEmbed()">
+                  </div>
+                </div>
+                <!--- Embedded Verified Icon --->
+                <div class="form-group">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="inputVerifiedEmbed" onclick="addVerifiedEmbed()" checked>
+                    <label class="form-check-label" for="inputVerifiedEmbed">Quoted Verified Account</label>
+                  </div>
+                </div>
+                <!--- Embedded Text --->
+                <div class="form-group">
+                  <label for="inputTextEmbed">Quoted Text</label>
+                  <textarea class="form-control" id="inputTextEmbed" maxlength="280" placeholder="Embedded text here..."></textarea>
+                  <div id="charCount2">
+                    <span id="currentEmbed">0</span>
+                    <span id="maximumEmbed">/ 280</span>
+                  </div>
+                </div>
+                <!--- Show Embedded Photo --->
+                <div class="form-group">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="showPhotoEmbed" onclick="addPhotoEmbed()">
+                    <label class="form-check-label" for="showPhotoEmbed">Add image</label>
+                  </div>
+                </div>
+                <!--- Embedded Photo --->
+                <div class="form-group collapse" role="form" aria-expanded="false" id="addPhotoEmbed">
+                  <div class="form-group">
+                    <label for="inputPhotoEmbed">Embedded Image URL</label>
+                    <input class="form-control" type="text" id="inputPhotoEmbed" oninput="buildPhotoEmbed()">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputAltPhotoEmbed">Embedded Image Alt Text</label>
+                    <input class="form-control" type="text" id="inputAltPhotoEmbed" oninput="buildPhotoEmbed()" placeholder="Text if the image doesn't show">
+                  </div>
+                </div>
+              </div>
+
+              <!--- Add Poll --->
+              <div class="collapse mediaBox" role="form" aria-expanded="false" id="addPoll">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="isActivePoll" onclick="buildActivePoll()">
+                    <label class="form-check-label" for="isActivePoll">Is the poll ongoing?</label>
+                  </div>
+                </div>
+                <div class="form-group collapse" role="form" aria-expanded="false" id="addPollTime">
+                  <div class="form-row" id="inputPollTime">
+                    <div class="col">
+                      <label for="inputPollDays">Days Left</label>
+                      <input class="form-control" type="number" id="inputPollDays" oninput="buildPollTime()">
+                    </div>
+                    <div class="col">
+                      <label for="inputPollDays">Hours Left</label>
+                      <input class="form-control" type="number" id="inputPollHours" oninput="buildPollTime()">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class="col-8">
+                      <label for="addPoll1">Options Text</label>
+                      <input type="text" class="form-control" id="addPoll1" maxlength="25" placeholder="Option 1" oninput="buildPollOptions()">
+                    </div>
+                    <div class="col">
+                      <label for="addPoll1">Vote Count</label>
+                      <input type="number" class="form-control" id="addVote1" placeholder="0" min="0" oninput="buildPollOptions()">
+                    </div>
+                  </div>
+                  <div class="form-row mt-2">
+                    <div class="col-8">
+                      <input type="text" class="form-control" id="addPoll2" maxlength="25" placeholder="Option 2" oninput="buildPollOptions()">
+                    </div>
+                    <div class="col">
+                      <input type="number" class="form-control" id="addVote2" placeholder="0" min="0" oninput="buildPollOptions()">
+                    </div>
+                  </div>
+                  <div class="form-row mt-2">
+                    <div class="col-8">
+                      <input type="text" class="form-control" id="addPoll3" maxlength="25" placeholder="Option 3" oninput="buildPollOptions()">
+                    </div>
+                    <div class="col">
+                      <input type="number" class="form-control" id="addVote3" placeholder="0" min="0" oninput="buildPollOptions()">
+                    </div>
+                  </div>
+                  <div class="form-row mt-2">
+                    <div class="col-8">
+                      <input type="text" class="form-control" id="addPoll4" maxlength="25" placeholder="Option 4" oninput="buildPollOptions()">
+                    </div>
+                    <div class="col">
+                      <input type="number" class="form-control" id="addVote4" placeholder="0" min="0" oninput="buildPollOptions()">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingFour">
+            <h2 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                Footer
+              </button>
+            </h2>
+          </div>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#settingAccordion">
+            <div class="card-body">
+              <!--- Hide Footer --->
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="hideFooter" onclick="hideFooter()">
+                  <label class="form-check-label" for="hideFooter">Hide footer</label>
+                </div>
+              </div>
+              <!--- Number of Likes --->
+              <div class="form-group">
+                <label for="inputLikesCt">Number of Likes</label>
+                <div class="form-row">
+                  <div class="col-auto">
+                    <input class="form-control" type="number" min="0" id="inputLikesCt" oninput="buildLikes()">
+                  </div>
+                  <div class="col-auto">
+                    <span class="checkbox metric">
+                      <input class="checkbox-element" name="addLikesMetric" value="K" type="checkbox" onclick="toggleStats()"/>
+                      <span>K</span>
+                    </span>
+                    <span class="checkbox metric">
+                      <input class="checkbox-element" name="addLikesMetric" value="M" type="checkbox" onclick="toggleStats()"/>
+                      <span>M</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <!--- Date and Time --->
+              <div class="form-group">
+                <label for="inputDate">Date of Post</label>
+                <input class="form-control" type="datetime-local" id="inputDate" oninput="buildTime()">
+              </div>
+              <!--- Hide Reply Count --->
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="hideComments" onclick="hideComments()">
+                  <label class="form-check-label" for="hideComments">Hide replies</label>
+                </div>
+              </div>
+              <!--- Number of Replies --->
+              <div class="form-group collapse show" role="form" aria-expanded="false" id="commentsBox">
+                <label for="inputComments">Number of Replies</label>
+                <div class="form-row">
+                  <div class="col-auto">
+                    <input class="form-control" type="number" min="0" id="inputComments" oninput="buildComments()">
+                  </div>
+                  <div class="col-auto">
+                    <span class="checkbox metric">
+                      <input class="checkbox-element" name="addCommentsMetric" value="K" type="checkbox" onclick="toggleStats()"/>
+                      <span>K</span>
+                    </span>
+                    <span class="checkbox metric">
+                      <input class="checkbox-element" name="addCommentsMetric" value="M" type="checkbox" onclick="toggleStats()"/>
+                      <span>M</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--- Opens sidenav form for settings --->
+    <div class="container pt-4">
+      <button class="settingsbtn" onclick="openNav()" data-toggle="popover" data-trigger="hover focus" data-content="Settings">
+        <i class="material-icons md-48 ao3_red">settings</i>
+      </button>
+
+      <button class="settingsbtn NMbutton" onclick="toggleSiteNM()" data-toggle="popover" data-trigger="hover focus" data-placement="left" data-content="Light/Dark BG">
+        <i class="material-icons md-48 ao3_red">brightness_4</i>
+      </button>
+    </div>
+
+    <!-- Main body text--->
+    <div id="main">
+      <!--- Dummy Text above Tweet--->
+      <h2 class="dummyHeader">Ao3 Tweet Builder</h2>
+      <h3 class="dummyHeader">by gadaursan</h3>
+      <div class="container my-4 dummyText collapse show">
+        <p>(The following text is an excerpt from Pride & Prejudice, for testing purposes)</p>
+        <p>“I do not know when I have been more shocked,” said she. “Wickham so very bad! It is almost past belief. And poor Mr. Darcy! Dear Lizzy, only consider what he must have suffered. Such a disappointment! and with the knowledge of your ill opinion, too! and having to relate such a thing of his sister! It is really too distressing. I am sure you must feel it so.”</p>
+        <p>It was some time, however, before a smile could be extorted from Jane.</p>
+      </div>
+
+      <!--- Floor model demonstration of Tweet --->
+      <div id="demonstration">
+        <div class="tw twBody">
+          <div class="twUser"><img class="twAvatar" alt="avatar image" src="https://images2.imgbox.com/68/f6/3IaTRbkQ_o.png"><span><span class="twName">Euphy</span><span class="twVerified">✔</span><br/><span class="twHandle">@officialeuphemia</span></span></div>
+            <div class="twText">met a really nice guy out in Area 11 and he has a cat named Arthur!! <span>#instantcrush</span></div><div class="twStats"><span class="twLikes">❤ 1.2M</span><span class="twTime"> 6:06 PM - August 12, 2017</span></div>
+            <div class="twComments ">32.2K people are talking about this</div>
+        </div>
+      </div>
+      <!--- Dummy text below Tweet --->
+      <div class="container my-4 dummyText collapse show">
+        <p>“Oh! no, my regret and compassion are all done away by seeing you so full of both. I know you will do him such ample justice, that I am growing every moment more unconcerned and indifferent. Your profusion makes me saving; and if you lament over him much longer, my heart will be as light as a feather.”</p>
+        <p>“Poor Wickham! there is such an expression of goodness in his countenance! such an openness and gentleness in his manner!”</p>
+        <p>“There certainly was some great mismanagement in the education of those two young men. One has got all the goodness, and the other all the appearance of it.”</p>
+      </div>
+      <!--- Button to generate code --->
+      <div class="genCode0">
+        <p>
+          <span data-toggle="popover" data-trigger="hover focus" data-content="Get the HTML for your fic">
+          <button class="btn btn-primary bg-dark" type="button" onclick="generateCode()" data-toggle="collapse" data-target=".genCode">
+            Generate HTML
+          </button>
+        </span>
+        </p>
+        <!--- Appears only when code needs to be generated --->
+        <div class="collapse genCode">
+          <button class="btn btn-primary btn-sm d-block bg-dark" type="button" data-clipboard-target="#HTMLCode">Copy to your fic</button>
+          <textarea readonly class="d-block my-2 copyable" id="HTMLCode">Dummy Text</textarea>
+          <p><a target="_blank" href="https://archiveofourown.org/works/22517134/chapters/53973601">Please see the AO3 Documentation for the full CSS code.</a></p>
+        </div>
+      </div>
+
+    </div>
+    <footer class="page-footer">
+      <div class="footer-copyright text-right mb-2 mr-2"><a target="_blank" href="https://github.com/gadaursan/AO3TweetBuilder">made by gadaursan © 2020</a></div>
+    </footer>
+
+    <!--- Optional Scripts --->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="js/tweetbuilder.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="js/purify.min.js"></script>
+  </body>
+</html>

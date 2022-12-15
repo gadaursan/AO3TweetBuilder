@@ -1,0 +1,9 @@
+{
+  "name": "AO3 Tweet Builder",
+  "short_name": "AO3 Tweet Builder",
+  "description": "A user friendly interfaces for building mock Tweets on Archive of Our Own",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#990000"
+}
